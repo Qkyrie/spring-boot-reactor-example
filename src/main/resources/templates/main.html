@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: includesFragment"/>
+<body class="homepage">
+
+<div th:replace="fragments/header :: headerFragment"/>
+
+<!-- Banner Wrapper -->
+<div id="banner-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="12u">
+                <div id="banner" class="box">
+                    <div>
+                        <div class="row">
+                            <div class="7u">
+                                <h2>Hi.</h2>
+
+                                <p>Welcome to my Spring Boot Reactor Example.</p>
+                            </div>
+                            <div class="5u">
+                                <ul>
+                                    <li><a href="https://github.com/Qkyrie/spring-boot-reactor-examples"
+                                           class="button big fa fa-arrow-circle-right">Visit on Github!</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="features-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="4u">
+                <section class="box box-feature">
+                    <a href="http://twitter.com/QuintenDes" class="image image-full"><img src="images/spring-header.jpg"
+                                                                                          alt=""/></a>
+
+                    <div class="inner">
+                        <header>
+                            <h2>Built on top of Spring-Boot </h2>
+                            <span class="byline">1.1.6.RELEASE</span>
+                        </header>
+                        <p>This entire example was created using Spring-Boot with a minimal amount of configuration.</p>
+                    </div>
+                </section>
+            </div>
+            <div class="4u">
+                <section class="box box-feature">
+                    <a href="http://www.thymeleaf.org/" class="image image-full"><img src="images/thymeleaf.png"
+                                                                                      alt="thymeleaf logo"/></a>
+
+                    <div class="inner">
+                        <header>
+                            <h2>Thymeleaf</h2>
+                            <span class="byline">Easy templating!</span>
+                        </header>
+                        <p>Thymeleaf is a Java library. It is an <b>XML / XHTML / HTML5</b> template engine (extensible
+                            to other formats) that can work both in web and non-web environments.</p>
+                    </div>
+                </section>
+            </div>
+            <div class="4u">
+                <section class="box box-feature last">
+                    <a href="#" class="image image-full"><img src="images/ghost.png" alt=""/></a>
+
+                    <div class="inner">
+                        <header>
+                            <h2>Oh, and finally ...</h2>
+                            <span class="byline">The <b>Awesome</b> Blogging Platform</span>
+                        </header>
+                        <p>All of my blogging is being distributed on the Ghost platform!</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="main-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="4u">
+                <div id="sidebar">
+                    <section class="widget-thumbnails">
+                        <h3>More free stuff</h3>
+                        <ul>
+                            <li><span onclick="connect();" class="button" href="/logs">/logs <span id="connected">Not Connected</span></span>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div class="8u">
+                <div id="content">
+                    <section class="last">
+                        <h2>So what's this all about?</h2>
+
+                        <p>Everytime someone accesses this page, a new entry in the logs will appear using an event
+                            system called Reactor.</p>
+
+                        <p>Reactor will publish and react on events asynchronously, giving it a high throughput.</p>
+                        <pre>
+                            <code class="JavaScript" id="logMessages"></code>
+                        </pre>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var stompClient = null;
+
+    function setConnected(connected) {
+        if (connected) {
+            document.getElementById('connected').innerHTML = 'Connected';
+        } else {
+            document.getElementById('connected').innerHTML = 'Not Connected';
+        }
+        document.getElementById('logMessages').innerHTML = '';
+    }
+
+    function connect() {
+        var socket = new SockJS('/loggingchecker');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+            stompClient.subscribe('/topic/newlogs', function (logs) {
+                getLogs(logs);
+            });
+        });
+    }
+
+    function disconnect() {
+        stompClient.disconnect();
+        setConnected(false);
+        console.log("Disconnected");
+    }
+
+    function getLogs(log) {
+        $('#logMessages').html(JSON.stringify(log.body, undefined, 1));
+        hljs.highlightBlock($('#logMessages'));
+    }
+</script>
+
+<div th:replace="fragments/footer :: footerFragment"/>
+</body>
+</html>
