@@ -9,6 +9,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import reactor.core.Reactor;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -24,6 +25,9 @@ public class LoggingServiceTest {
 
     @Mock
     private LogMessageRepository repository;
+
+    @Mock
+    private Reactor reactor;
 
     @Test
     public void logCallsLogRepository() {
