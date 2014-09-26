@@ -18,7 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SpringReactorExample.class)
 @WebAppConfiguration
-@IntegrationTest
+@IntegrationTest("server.port:0")
 public class RepositoryIntegrationTest {
 
     @Test
