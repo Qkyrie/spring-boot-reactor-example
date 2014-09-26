@@ -25,8 +25,7 @@ public class LoggingServiceTest {
 
     @Mock
     private LogMessageRepository repository;
-    @Mock
-    private Reactor reactor;
+
 
     @Mock
     private Reactor reactor;
