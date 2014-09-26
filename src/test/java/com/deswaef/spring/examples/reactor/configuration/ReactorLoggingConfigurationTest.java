@@ -15,7 +15,7 @@ import reactor.event.Event;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SpringReactorExample.class)
 @WebAppConfiguration
-@IntegrationTest
+@IntegrationTest("server.port:0")
 public class ReactorLoggingConfigurationTest {
 
     @Autowired
