@@ -6,8 +6,8 @@ import com.deswaef.spring.examples.reactor.repository.LogMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import reactor.core.Reactor;
-import reactor.event.Event;
+import reactor.bus.Event;
+import reactor.bus.EventBus;
 
 import java.util.Date;
 import java.util.List;
@@ -26,7 +26,7 @@ public class LoggingService {
     private LogMessageRepository logMessageRepository;
 
     @Autowired
-    private Reactor r;
+    private EventBus r;
 
     @Transactional(readOnly = true)
     public List<LogMessage> findAll() {

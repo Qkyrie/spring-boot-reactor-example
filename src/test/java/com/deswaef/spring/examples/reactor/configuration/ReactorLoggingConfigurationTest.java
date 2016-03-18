@@ -9,8 +9,8 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import reactor.core.Reactor;
-import reactor.event.Event;
+import reactor.bus.Event;
+import reactor.bus.EventBus;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SpringReactorExample.class)
@@ -19,7 +19,7 @@ import reactor.event.Event;
 public class ReactorLoggingConfigurationTest {
 
     @Autowired
-    private Reactor r;
+    private EventBus r;
 
     @Autowired
     private LogMessageRepository logMessageRepository;

@@ -5,14 +5,14 @@ import com.deswaef.spring.examples.reactor.model.LogCategory;
 import com.deswaef.spring.examples.reactor.service.LoggingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import reactor.core.Reactor;
-import reactor.event.Event;
-import reactor.function.Consumer;
+import reactor.bus.Event;
+import reactor.bus.EventBus;
+import reactor.fn.Consumer;
 
 import javax.annotation.PostConstruct;
 
-import static reactor.event.selector.Selectors.R;
-import static reactor.event.selector.Selectors.T;
+import static reactor.bus.selector.Selectors.R;
+import static reactor.bus.selector.Selectors.T;
 
 /**
  * User: Quinten
@@ -25,7 +25,7 @@ import static reactor.event.selector.Selectors.T;
 public class ReactorLoggingConfiguration {
 
     @Autowired
-    private Reactor r;
+    private EventBus r;
 
     @Autowired
     private LoggingService loggingService;
@@ -36,8 +36,8 @@ public class ReactorLoggingConfiguration {
         r.on(T(ReactorExampleException.class), logForException());
     }
 
-    private Consumer<Event<ReactorExampleException>> logForException() {
-        return logException -> loggingService.log(LogCategory.ERROR, logException.getData().getMessage());
+    private Consumer<Event<?>> logForException() {
+        return logException -> loggingService.log(LogCategory.ERROR, logException.getData().toString());
     }
 
 

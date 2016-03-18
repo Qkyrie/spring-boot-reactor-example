@@ -7,18 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import reactor.core.Reactor;
-import reactor.event.Event;
-import reactor.function.Consumer;
+import reactor.bus.Event;
+import reactor.bus.EventBus;
+import reactor.fn.Consumer;
 
 import javax.annotation.PostConstruct;
-
-import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static reactor.event.selector.Selectors.$;
-import static reactor.event.selector.Selectors.R;
+import static reactor.bus.selector.Selectors.$;
 
 /**
  * User: Quinten
@@ -32,7 +29,7 @@ import static reactor.event.selector.Selectors.R;
 public class WelcomeController {
 
     @Autowired
-    private Reactor r;
+    private EventBus r;
     @Autowired
     private SimpMessagingTemplate template;
 

@@ -9,7 +9,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import reactor.core.Reactor;
+import reactor.bus.EventBus;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -18,8 +18,9 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class LoggingServiceTest {
 
-    public static final LogCategory TEST_CATEGORY = LogCategory.DEBUG;
-    public static final String TEST_LOG_MESSAGE = "this is the log message";
+    private static final LogCategory TEST_CATEGORY = LogCategory.DEBUG;
+    private static final String TEST_LOG_MESSAGE = "this is the log message";
+
     @InjectMocks
     private LoggingService loggingService;
 
@@ -28,7 +29,7 @@ public class LoggingServiceTest {
 
 
     @Mock
-    private Reactor reactor;
+    private EventBus reactor;
 
     @Test
     public void logCallsLogRepository() {
